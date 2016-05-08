@@ -1318,6 +1318,7 @@ let transact conn ?isolation ?access ?deferrable f =
        return r
     )
     (fun e ->
+       ping conn >>= fun () ->
        rollback conn >>= fun () ->
        fail e
     )
