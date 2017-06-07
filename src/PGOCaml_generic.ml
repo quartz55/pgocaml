@@ -1644,19 +1644,7 @@ let string_of_float_array a = string_of_any_array (List.map (option_map string_o
 let string_of_timestamp_array a = string_of_any_array (List.map (option_map string_of_timestamp) a)
 
 let string_of_bytea b =
-  let len = String.length b in
-  let buf = Buffer.create (len * 2) in
-  for i = 0 to len - 1 do
-    let c = b.[i] in
-    let cc = Char.code c in
-    if cc < 0x20 || cc > 0x7e then
-      Buffer.add_string buf (sprintf "\\%03o" cc) (* non-print -> \ooo *)
-    else if c = '\\' then
-      Buffer.add_string buf "\\\\" (* \ -> \\ *)
-    else
-      Buffer.add_char buf c
-  done;
-  Buffer.contents buf
+  let `Hex b_hex = Hex.of_string b in  "\\x" ^ b_hex
 
 let string_of_bytea_array a =
   string_of_any_array (List.map (option_map string_of_bytea) a)
