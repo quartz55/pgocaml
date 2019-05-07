@@ -19,6 +19,7 @@ remove: [
 ]
 depends: [
   "ocaml" {>= "4.05"}
+  "base"
   "base-bytes"
   "calendar"
   "csv"
